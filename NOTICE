@@ -1,0 +1,60 @@
+ocpp-sim (a simulated OCPP charge point, in Go)
+Copyright 2026 Abhinav Gautam
+
+This module is licensed under the Apache License, Version 2.0 (LICENSE).
+
+The code was written for SigmaM2M, a oneM2M platform, from the OCPP
+documents listed in PROVENANCE.md. It contains no code from other
+projects. The files that come from SigmaM2M without a per-file copyright
+header (the convention of the code they come from) are covered by the
+copyright line above. Files added for this module carry "Copyright 2026
+Abhinav Gautam" and "SPDX-License-Identifier: Apache-2.0".
+
+Trademarks
+----------
+
+OCPP and Open Charge Alliance are names of the Open Charge Alliance. This
+module is not made, endorsed, certified or supported by the Open Charge
+Alliance, and is not affiliated with it; the names are used only to say
+which protocol it simulates.
+
+Specifications
+--------------
+
+No specification text is reproduced. The OCPP documents (1.6 edition 2
+with OCPP-J 1.6 and OCPP-S 1.6, the 1.6 security whitepaper, 2.0.1
+edition 4 and 2.1 edition 2), published by the Open Charge Alliance under
+CC BY-ND 4.0, are used for facts only. The OCA JSON schemas and WSDLs
+the simulator checks its messages against are embedded in the ocpp
+module (unmodified, CC BY-ND 4.0; see that module's NOTICE), not in this
+one.
+
+Dependencies
+------------
+
+- github.com/cB-Sigma/ocpp (the OCPP protocol core; Copyright 2026
+  Abhinav Gautam, Apache-2.0, with the OCA files under CC BY-ND 4.0) and
+  its dependencies: github.com/cB-Sigma/jsonschema (Apache-2.0),
+  github.com/santhosh-tekuri/jsonschema/v6 (Apache-2.0),
+  github.com/go-jose/go-jose/v4 (Apache-2.0), golang.org/x/text and
+  golang.org/x/net (BSD-3-Clause).
+- github.com/coder/websocket v1.8.15 (ISC, Copyright (c) 2025 Coder).
+- The Go standard library (BSD-3-Clause, Copyright The Go Authors).
+
+Interop tests (interop/, a separate test-only module)
+-----------------------------------------------------
+
+- github.com/lorenzodonini/ocpp-go v0.19.0 (MIT, Copyright (c) 2019) and
+  its dependencies, required by interop/go.mod only.
+- interop/peer/Dockerfile installs mobilityhouse/ocpp 2.1.0 (MIT,
+  Copyright (c) 2019 The Mobility House) and websockets 15.0.1
+  (BSD-3-Clause, Copyright (c) Aymeric Augustin and contributors) from
+  PyPI into a python:3.12.10-slim image at test time; nothing of them is
+  copied into this repository. interop/peer/csms.py is our own script
+  that calls mobilityhouse/ocpp.
+
+Test data
+---------
+
+Every charger identity, id tag, certificate and key in this module is
+made up, or generated with throw-away keys when the tests run.
