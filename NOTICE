@@ -46,6 +46,10 @@ Interop tests (interop/, a separate test-only module)
 
 - github.com/lorenzodonini/ocpp-go v0.19.0 (MIT, Copyright (c) 2019) and
   its dependencies, required by interop/go.mod only.
+- github.com/seanlee0923/ocpp v0.3.0 (MIT, Copyright (c) 2026
+  seanlee0923) and its dependencies (github.com/google/uuid,
+  BSD-3-Clause; github.com/gorilla/websocket, BSD-2-Clause), required by
+  interop/go.mod only.
 - interop/peer/Dockerfile installs mobilityhouse/ocpp 2.1.0 (MIT,
   Copyright (c) 2019 The Mobility House) and websockets 15.0.1
   (BSD-3-Clause, Copyright (c) Aymeric Augustin and contributors) from

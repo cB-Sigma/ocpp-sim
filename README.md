@@ -88,8 +88,8 @@ Reference: https://pkg.go.dev/github.com/cB-Sigma/ocpp-sim
 |---|---|
 | `sim` | `New(Config)`, `ChargePoint` (`Connect`, `Disconnect`, `Boot`, `Heartbeat`, `Status`, `StatusAt`, `Authorize`, `Start`, `Meter`, `Stop`, `Transaction`, `Call`, `Send`, `Raw`, `Answer`, `Received`, `Wait`, `Violations`, `SignCertificate`, `NotifyEvent`, `OpenStream`, `StreamValues`, firmware and reservation helpers) |
 | `cmd/ocppsim` | runs one charge point of any version, OCPP-J or OCPP-S |
-| `internal/minicsms` | the small central system, on the ocpp module, that the tests run the simulator against |
-| `interop` (nested module, tests only) | mobilityhouse/ocpp's central system (in a container) and ocpp-go's (in process) against the simulator |
+| `internal/minicsms` | the small central system, on the ocpp module's `csms` package, that the tests run the simulator against |
+| `interop` (nested module, tests only) | mobilityhouse/ocpp's central system (in a container), ocpp-go's and seanlee0923/ocpp's (in process) against the simulator |
 
 Changes per version are in [CHANGELOG.md](CHANGELOG.md).
 
@@ -97,7 +97,7 @@ Changes per version are in [CHANGELOG.md](CHANGELOG.md).
 
 ```
 go test -race ./...
-cd interop && go test -v ./...                          # ocpp-go, in process
+cd interop && go test -v ./...                          # ocpp-go and seanlee0923/ocpp, in process (Go 1.26.5)
 cd interop && SIGMA_OCPP_INTEROP=1 go test -v ./...     # and mobilityhouse/ocpp, needs Docker
 ```
 
@@ -137,9 +137,13 @@ tests added for the first release carry none.
   (`TestTransactionKnownWhenStartedIsSent`).
 - SigmaM2M's CSMS is tested against this simulator for every version,
   OCPP-S included, and runs the OCA part 6 CSMS test cases with it.
+- seanlee0923/ocpp v0.3.0's 2.1 CSMS (2026-10-12, in process;
+  `interop`): the simulator booted, reported both connectors, sent a
+  heartbeat and a SEND (NotifyPeriodicEventStream, three values) that
+  seanlee's typed SEND handler decoded, and answered its Reset; no
+  message of seanlee's fell outside the OCA schemas. Passed.
 - Not yet: OCPP-S against another central system (SteVe speaks it; not
-  run), 2.1 SEND against another implementation (neither peer has it),
-  security profiles 2 and 3 against another implementation.
+  run yet), security profiles 2 and 3 against another implementation.
 
 ## Demo values
 

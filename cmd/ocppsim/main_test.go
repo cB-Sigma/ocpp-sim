@@ -11,10 +11,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/cB-Sigma/ocpp"
 	"github.com/cB-Sigma/ocpp-sim/internal/minicsms"
 )
 
 func TestRunSession(t *testing.T) {
+	// Compile the schemas first: under the race detector compiling the 2.1
+	// set takes longer than a whole -for 500ms run.
+	if err := ocpp.LoadSchemas(); err != nil {
+		t.Fatal(err)
+	}
 	csms := minicsms.New()
 	srv := httptest.NewServer(csms)
 	defer srv.Close()

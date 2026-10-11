@@ -1,7 +1,7 @@
-github.com/cB-Sigma/jsonschema v0.2.0 h1:g1likO9VKbiYewe1ggxzmLnF2w1DFQPs2gBJSgNmq1w=
-github.com/cB-Sigma/jsonschema v0.2.0/go.mod h1:ICpbeLa/PjO7pWKEZdz3MFkm+4jxCfRlog/OezNuhIY=
-github.com/cB-Sigma/ocpp v0.1.0 h1:Nkp1HW6WVmkwknOZQbM/VtpZbIzRNKD9iJY+gAw//70=
-github.com/cB-Sigma/ocpp v0.1.0/go.mod h1:jNFbNYR42EXL/RnpRHUqwRZU/TcKXRSRgSMgGgFlaH8=
+github.com/cB-Sigma/jsonschema v0.3.0 h1:0YzVB4saG7UxenJgGlJlCwIh3gOqsriUZTtYgJHSlmY=
+github.com/cB-Sigma/jsonschema v0.3.0/go.mod h1:ICpbeLa/PjO7pWKEZdz3MFkm+4jxCfRlog/OezNuhIY=
+github.com/cB-Sigma/ocpp v0.2.0 h1:eAgQB9cM5yIK4MxkvrP7SxNZ0u0AHFfnaewFL4Wz4lc=
+github.com/cB-Sigma/ocpp v0.2.0/go.mod h1:BXmGxKhKsB5QljR5OVQCAtZGF4J9MZUceIQlpe152nQ=
 github.com/coder/websocket v1.8.15 h1:6B2JPeOGlpff2Uz6vOEH1Vzpi0iUz20A+lPVhPHtNUA=
 github.com/coder/websocket v1.8.15/go.mod h1:NX3SzP+inril6yawo5CQXx8+fk145lPDC6pumgx0mVg=
 github.com/dlclark/regexp2 v1.11.0 h1:G/nrcoOa7ZXlpoa/91N3X7mM3r8eIlMBBJZvsz/mxKI=

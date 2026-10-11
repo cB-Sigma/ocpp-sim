@@ -13,16 +13,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"net/http"
 	"sort"
 	"strconv"
 	"strings"
 	"sync"
 	"time"
 
-	"github.com/coder/websocket"
-
 	"github.com/cB-Sigma/ocpp"
+	"github.com/cB-Sigma/ocpp/chargepoint"
 )
 
 // Config describes a simulated charger.
@@ -98,29 +96,16 @@ func (cp *ChargePoint) Connect(ctx context.Context) error {
 	if cp.cfg.SOAP {
 		return cp.connectSOAP()
 	}
-	hdr := http.Header{}
 	cp.mu.Lock()
 	pw := cp.cfg.Password
 	cp.mu.Unlock()
-	if pw != "" {
-		hdr.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(cp.cfg.ID+":"+pw)))
-	}
-	opts := &websocket.DialOptions{Subprotocols: []string{cp.cfg.Version}, HTTPHeader: hdr}
-	if cp.cfg.TLS != nil {
-		opts.HTTPClient = &http.Client{Transport: &http.Transport{TLSClientConfig: cp.cfg.TLS}}
-	}
-	ws, resp, err := websocket.Dial(ctx, cp.cfg.URL+cp.cfg.ID, opts)
+	// The library's charging station role opens the connection: identity
+	// in the path, the one version offered, basic authentication, TLS.
+	d, err := chargepoint.Dial(ctx, chargepoint.Config{URL: cp.cfg.URL, ID: cp.cfg.ID, Versions: []string{cp.cfg.Version}, Password: pw, TLS: cp.cfg.TLS})
 	if err != nil {
-		if resp != nil {
-			return fmt.Errorf("dial: HTTP %d: %w", resp.StatusCode, err)
-		}
 		return err
 	}
-	if ws.Subprotocol() != cp.cfg.Version {
-		_ = ws.CloseNow()
-		return fmt.Errorf("the CSMS chose subprotocol %q", ws.Subprotocol())
-	}
-	c := ocpp.NewConn(ws, cp.cfg.Version, cp.cfg.Timeout, cp.handle)
+	c := ocpp.NewConn(d.WS, cp.cfg.Version, cp.cfg.Timeout, cp.handle)
 	if cp.cfg.Version == ocpp.V21 {
 		c.CheckResult = func(action string, p json.RawMessage) error {
 			if strings.HasSuffix(action, "-Signed") {
